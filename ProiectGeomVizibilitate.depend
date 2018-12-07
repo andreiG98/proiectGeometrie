@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1544110771 source:d:\anul ii\geomcomp\proiectgeomvizibilitate\main.cpp
+	<iostream>
+	<vector>
+	<fstream>
+	<algorithm>
+
