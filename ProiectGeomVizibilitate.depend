@@ -5,3 +5,27 @@
 	<fstream>
 	<algorithm>
 
+1545393675 source:d:\projects\fmi dl\dl 2\semestrul 1\geomcomp\lab\proiect\proiectgeometrie\main.cpp
+	<iostream>
+	<vector>
+	<fstream>
+	<deque>
+	<algorithm>
+	<cstring>
+	"intersectieSegmente.h"
+
+1545390828 d:\projects\fmi dl\dl 2\semestrul 1\geomcomp\lab\proiect\proiectgeometrie\intersectiesegmente.h
+	<algorithm>
+
+1545419273 source:c:\users\andre\onedrive\desktop\proiectgeometrie\main.cpp
+	<iostream>
+	<vector>
+	<fstream>
+	<deque>
+	<algorithm>
+	<cstring>
+	"intersectieSegmente.h"
+
+1545399556 c:\users\andre\onedrive\desktop\proiectgeometrie\intersectiesegmente.h
+	<algorithm>
+
