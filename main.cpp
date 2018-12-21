@@ -9,12 +9,6 @@
 
 using namespace std;
 
-/*struct Point {
-    float x;
-    float y;
-    int indice;
-};*/
-
 struct Triunghi {
     int punct1;
     int punct2;
@@ -80,10 +74,10 @@ void verificareVfConvexe() {
         convex[i] = true;
     }
     //sort_points();
+    stackk.push_back(auxiliar[auxiliar.size() - 1]); //aici am modificat, sa inceapa de la coada si sa mearga spre dreapta. Daca pornea de la 0, pe primul varf nu-l vedea ca fiind concav atunci cand era concav
     stackk.push_back(auxiliar[0]);
-    stackk.push_back(auxiliar[1]);
     head = 2;
-    for (i = 2; i < auxiliar.size(); ++i)
+    for (i = 1; i < auxiliar.size(); ++i)
     {
         while (head >= 2 && cross_product(stackk[head - 2], stackk[head - 1], auxiliar[i]) > 0)
         {
@@ -149,6 +143,7 @@ void triangulare() {
     deque<Point>::iterator pNext, pPrev, pCurrent, pDiagonal;
     while (lista.size() > 4) {
         verificareVfConvexe();
+        //cout<<convex[poligon.size() - 1]<<endl;
         pCurrent = findEar();
         pPrev = pCurrent - 1;
         if (pCurrent == lista.begin())
@@ -208,7 +203,7 @@ void triangulare() {
 }
 
 void puncteVizibile() {
-    int i, j, stop;
+    int i, j, stop, pFirst, pSecond;
     bool ok;
     Point pPrev, pCurent, pNext;
     for (i = 0; i < poligon.size(); i++) {
@@ -226,7 +221,11 @@ void puncteVizibile() {
         for(j = pNext.indice; j != stop + 1 && ok; j++) {
             if (j == poligon.size())
                 j = 0;
-            if (verificareIntersectieSegmente(punctDeVerificat, pCurent, poligon[j], poligon[j + 1]))
+            pFirst = j;
+            pSecond = j + 1;
+            if(pSecond == poligon.size())
+                pSecond = 0;
+            if (verificareIntersectieSegmente(punctDeVerificat, pCurent, poligon[pFirst], poligon[pSecond]))
                 ok = false;
         }
         vizibile[i] = ok;
@@ -247,10 +246,10 @@ int main() {
     //diagonale();
     triangulare();
     /*for (int i = 0; i < triunghiuri.size(); i++)
-        cout << triunghiuri[i].punct1 << ' ' << triunghiuri[i].punct2 << ' ' << triunghiuri[i].punct3 << '\n';
-    for (int i = 0; i < poligon.size(); i++)
-        cout<<vizibile[i]<<' ';
-    cout<<endl;*/
+        cout << triunghiuri[i].punct1 << ' ' << triunghiuri[i].punct2 << ' ' << triunghiuri[i].punct3 << '\n';*/
+    /*for (int i = 0; i < poligon.size(); i++)
+        cout<<vizibile[i]<<' ';*/
+    //cout<<endl<<endl;
     triunghiuriVizibileDinPc();
     for (int i = 0; i < triunghiuriVizibile.size(); i++)
         cout << triunghiuriVizibile[i].punct1 << ' ' << triunghiuriVizibile[i].punct2 << ' ' << triunghiuriVizibile[i].punct3 << '\n';
