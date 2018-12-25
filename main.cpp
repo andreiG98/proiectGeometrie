@@ -243,15 +243,17 @@ void triunghiuriVizibileDinPc() {
 
 int main() {
     read();
-    //diagonale();
     triangulare();
     /*for (int i = 0; i < triunghiuri.size(); i++)
         cout << triunghiuri[i].punct1 << ' ' << triunghiuri[i].punct2 << ' ' << triunghiuri[i].punct3 << '\n';*/
-    /*for (int i = 0; i < poligon.size(); i++)
+    /*puncteVizibile();
+    for (int i = 0; i < poligon.size(); i++)
         cout<<vizibile[i]<<' ';*/
     //cout<<endl<<endl;
     triunghiuriVizibileDinPc();
+    ofstream fout("date.out");
     for (int i = 0; i < triunghiuriVizibile.size(); i++)
-        cout << triunghiuriVizibile[i].punct1 << ' ' << triunghiuriVizibile[i].punct2 << ' ' << triunghiuriVizibile[i].punct3 << '\n';
+        fout << triunghiuriVizibile[i].punct1 << ' ' << triunghiuriVizibile[i].punct2 << ' ' << triunghiuriVizibile[i].punct3 << '\n';
+    fout.close();
     return 0;
 }

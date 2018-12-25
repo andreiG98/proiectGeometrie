@@ -29,3 +29,15 @@
 1545424532 c:\users\andre\onedrive\desktop\proiectgeometrie\intersectiesegmente.h
 	<algorithm>
 
+1545774087 source:c:\users\andre\downloads\proiectgeometrie-master\proiectgeometrie-master\main.cpp
+	<iostream>
+	<vector>
+	<fstream>
+	<deque>
+	<algorithm>
+	<cstring>
+	"intersectieSegmente.h"
+
+1545773605 c:\users\andre\downloads\proiectgeometrie-master\proiectgeometrie-master\intersectiesegmente.h
+	<algorithm>
+
