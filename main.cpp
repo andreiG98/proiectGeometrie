@@ -243,7 +243,6 @@ void triunghiuriVizibileDinPc() {
 
 int main() {
     read();
-    //diagonale();
     triangulare();
     /*for (int i = 0; i < triunghiuri.size(); i++)
         cout << triunghiuri[i].punct1 << ' ' << triunghiuri[i].punct2 << ' ' << triunghiuri[i].punct3 << '\n';*/
