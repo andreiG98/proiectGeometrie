@@ -17,7 +17,6 @@ struct Triunghi {
 
 bool convex[NMAX];
 bool ear[NMAX];
-//bool Diag[NMAX][NMAX];
 bool viz[NMAX];
 bool vizibile[NMAX];
 
@@ -73,8 +72,8 @@ void verificareVfConvexe() {
     for (i = 0; i < poligon.size(); i++) {
         convex[i] = true;
     }
-    //sort_points();
-    stackk.push_back(auxiliar[auxiliar.size() - 1]); //aici am modificat, sa inceapa de la coada si sa mearga spre dreapta. Daca pornea de la 0, pe primul varf nu-l vedea ca fiind concav atunci cand era concav
+    stackk.push_back(auxiliar[auxiliar.size() - 1]); 
+    //aici am modificat, sa inceapa de la coada si sa mearga spre dreapta. Daca pornea de la 0, pe primul varf nu-l vedea ca fiind concav atunci cand era concav
     stackk.push_back(auxiliar[0]);
     head = 2;
     for (i = 1; i < auxiliar.size(); ++i)
@@ -91,27 +90,6 @@ void verificareVfConvexe() {
     stackk.clear();
     auxiliar.clear();
 }
-
-/*void diagonale() {
-    int i, j, k, prevI, nextJ;
-    bool ok;
-    for (i = 0; i < poligon.size(); i++)
-        for (j = i + 2; j < poligon.size(); j++) {
-            ok = true;
-            prevI = i - 1;
-            if (prevI == -1)
-                prevI = poligon.size() - 1;
-            nextJ = j + 1;
-            if (nextJ == poligon.size())
-                nextJ = 0;
-            for (k = 1; k < poligon.size() && ok; k++) {
-                if (verificareIntersectieSegmente(poligon[i], poligon[j], poligon[k-1], poligon[k]));
-                    ok = false;
-            }
-            if (ok)
-                Diag[i][j] = Diag[j][i] = true;
-        }
-}*/
 
 deque<Point>::iterator findEar() {
     deque<Point>::iterator pNext, pPrev, pCurrent;
@@ -143,7 +121,6 @@ void triangulare() {
     deque<Point>::iterator pNext, pPrev, pCurrent, pDiagonal;
     while (lista.size() > 4) {
         verificareVfConvexe();
-        //cout<<convex[poligon.size() - 1]<<endl;
         pCurrent = findEar();
         pPrev = pCurrent - 1;
         if (pCurrent == lista.begin())
@@ -244,12 +221,6 @@ void triunghiuriVizibileDinPc() {
 int main() {
     read();
     triangulare();
-    /*for (int i = 0; i < triunghiuri.size(); i++)
-        cout << triunghiuri[i].punct1 << ' ' << triunghiuri[i].punct2 << ' ' << triunghiuri[i].punct3 << '\n';*/
-    /*puncteVizibile();
-    for (int i = 0; i < poligon.size(); i++)
-        cout<<vizibile[i]<<' ';*/
-    //cout<<endl<<endl;
     triunghiuriVizibileDinPc();
     ofstream fout("date.out");
     for (int i = 0; i < triunghiuriVizibile.size(); i++)
