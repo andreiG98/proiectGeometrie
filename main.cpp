@@ -10,9 +10,9 @@
 using namespace std;
 
 struct Triunghi {
-    int punct1;
-    int punct2;
-    int punct3;
+    Point punct1;
+    Point punct2;
+    Point punct3;
 };
 
 bool convex[NMAX];
@@ -46,23 +46,6 @@ inline float cross_product(const Point& A, const Point& B, const Point& C) {
     return (B.x - A.x) * (C.y - A.y) - (B.y - A.y) * (C.x - A.x);
 }
 
-inline bool cmp(const Point& p1, const Point& p2) {
-    return cross_product(auxiliar[0], p1, p2) < 0;
-}
-
-bool testOrientare(const Point& p1, const Point& p2, const Point& p3) {
-    return cross_product(p1, p2, p3) < 0;
-}
-
-void sort_points() {
-    int pos = 0;
-    for (int i = 1; i < auxiliar.size(); ++i)
-        if (auxiliar[i].x < auxiliar[pos].x || (auxiliar[i].x == auxiliar[pos].x && auxiliar[i].y < auxiliar[pos].y))
-            pos = i;
-    swap(auxiliar[0], auxiliar[pos]);
-    sort(auxiliar.begin() + 1, auxiliar.end(), cmp);
-}
-
 void verificareVfConvexe() {
     int i;
     deque<Point>::iterator pCurrent;
@@ -72,8 +55,7 @@ void verificareVfConvexe() {
     for (i = 0; i < poligon.size(); i++) {
         convex[i] = true;
     }
-    stackk.push_back(auxiliar[auxiliar.size() - 1]); 
-    //aici am modificat, sa inceapa de la coada si sa mearga spre dreapta. Daca pornea de la 0, pe primul varf nu-l vedea ca fiind concav atunci cand era concav
+    stackk.push_back(auxiliar[auxiliar.size() - 1]); //aici am modificat, sa inceapa de la coada si sa mearga spre dreapta. Daca pornea de la 0, pe primul varf nu-l vedea ca fiind concav atunci cand era concav
     stackk.push_back(auxiliar[0]);
     head = 2;
     for (i = 1; i < auxiliar.size(); ++i)
@@ -96,16 +78,6 @@ deque<Point>::iterator findEar() {
     bool found = false;
     for (pCurrent = lista.begin(); pCurrent != lista.end() && (!found); pCurrent++)
         if (convex[pCurrent->indice] && viz[pCurrent->indice] == false) {
-            /*pPrev = pCurrent - 1;
-            if (pCurrent == lista.begin())
-                pPrev = lista.end() - 1;
-            pNext = pCurrent + 1;
-            if (pNext == lista.end())
-                pNext = lista.begin();
-            if (convex[pNext->indice] && convex[pPrev->indice]) {
-                found = true;
-            }
-            */
             found = true;
         }
     if (found)
@@ -140,7 +112,17 @@ void triangulare() {
         }
 
         if (ok) {
-            triunghiuri.push_back({pPrev->indice, pCurrent->indice, pNext->indice});
+            Point A, B, C;
+            A.indice = pPrev->indice;
+            A.x = pPrev->x;
+            A.y = pPrev->y;
+            B.indice = pCurrent->indice;
+            B.x = pCurrent->x;
+            B.y = pCurrent->y;
+            C.indice = pNext->indice;
+            C.x = pNext->x;
+            C.y = pNext->y;
+            triunghiuri.push_back({A, B, C});
             lista.erase(pCurrent);
             memset(viz, 0, sizeof(viz));
         }
@@ -175,8 +157,29 @@ void triangulare() {
         if (pPrev >= lista.end())
            pPrev = lista.begin() + (pPrev - lista.end());
     }
-    triunghiuri.push_back({pCurrent->indice, pNext->indice, pDiagonal->indice});
-    triunghiuri.push_back({pDiagonal->indice, pPrev->indice, pCurrent->indice});
+
+    Point A, B, C;
+    A.indice = pCurrent->indice;
+    A.x = pCurrent->x;
+    A.y = pCurrent->y;
+    B.indice = pNext->indice;
+    B.x = pNext->x;
+    B.y = pNext->y;
+    C.indice = pDiagonal->indice;
+    C.x = pDiagonal->x;
+    C.y = pDiagonal->y;
+    triunghiuri.push_back({A, B, C});
+
+    A.indice = pDiagonal->indice;
+    A.x = pDiagonal->x;
+    A.y = pDiagonal->y;
+    B.indice = pPrev->indice;
+    B.x = pPrev->x;
+    B.y = pPrev->y;
+    C.indice = pCurrent->indice;
+    C.x = pCurrent->x;
+    C.y = pCurrent->y;
+    triunghiuri.push_back({A, B, C});
 }
 
 void puncteVizibile() {
@@ -212,7 +215,7 @@ void puncteVizibile() {
 void triunghiuriVizibileDinPc() {
     puncteVizibile();
     for (int i = 0; i < triunghiuri.size(); i++) {
-        if(vizibile[triunghiuri[i].punct1] && vizibile[triunghiuri[i].punct2] && vizibile[triunghiuri[i].punct3]) {
+        if(vizibile[triunghiuri[i].punct1.indice] && vizibile[triunghiuri[i].punct2.indice] && vizibile[triunghiuri[i].punct3.indice]) {
             triunghiuriVizibile.push_back({triunghiuri[i].punct1, triunghiuri[i].punct2, triunghiuri[i].punct3});
         }
     }
@@ -224,7 +227,7 @@ int main() {
     triunghiuriVizibileDinPc();
     ofstream fout("date.out");
     for (int i = 0; i < triunghiuriVizibile.size(); i++)
-        fout << triunghiuriVizibile[i].punct1 << ' ' << triunghiuriVizibile[i].punct2 << ' ' << triunghiuriVizibile[i].punct3 << '\n';
+        fout << triunghiuriVizibile[i].punct1.x << ' ' << triunghiuriVizibile[i].punct1.y << '\n' << triunghiuriVizibile[i].punct2.x << ' ' << triunghiuriVizibile[i].punct2.y << '\n' << triunghiuriVizibile[i].punct3.x  << ' ' << triunghiuriVizibile[i].punct3.y << "\n\n";
     fout.close();
     return 0;
 }
